@@ -4,6 +4,7 @@ import 'package:email_app/Repositry/UserRepositry.dart';
 import 'package:email_app/view/LayoutOne/ImageContainer.dart';
 import 'package:email_app/view/LayoutOne/login.dart';
 import 'package:email_app/viewModel/AuthC/LoginController.dart';
+import 'package:email_app/viewModel/UserC/UpdateUserController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,14 +16,16 @@ class UserProfileController extends GetxController {
   final _apiUser = UserRepositry();
 
   // Observable user model
+  final SignInController signInController = SignInController();
+
   final userModelU = UserModel().obs;
   void setUserModelDto(UserModel userModel) {
     userModelU.value = userModel;
+    signInController.setUserModel(userModel);
   }
 
   final nameController = TextEditingController().obs;
   final userProfileController = TextEditingController().obs;
-  final SignInController signInController = Get.put(SignInController());
 
   // Method to handle updating user profile
   Future<void> updateUserProfile() async {
@@ -77,7 +80,7 @@ class UserProfileController extends GetxController {
       "http://localhost:3000/tokenIsValid",
       <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'x-auth-token-w': token!,
+        'x-auth-token': token!,
       },
     ).then((value) {
       isLoading.value = false;
@@ -85,24 +88,25 @@ class UserProfileController extends GetxController {
       print(token);
       if (value) {
         _apiUser.getUserData(
-          "/",
+          "http://localhost:3000/",
           <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-auth-token-w': token,
+            'x-auth-token': token,
           },
         ).then((value) {
           print(value);
-          setUserModelDto(value);
-          Get.snackbar("Welcome", "Again...");
-          setIsLoading(false.obs);
-          // String? token = prefs.getString('valid');
-
-          if (value.name != null) {
-            isLoading.value = false;
-            Get.offAll(PickImageScreen());
+          if (value != null) {
+            setUserModelDto(value);
+            Get.snackbar("Welcome", "Again...");
+            setIsLoading(false.obs);
+            if (value.email != null) {
+              Get.offAll(PickImageScreen());
+            } else {
+              Get.to(LoginUI());
+            }
           } else {
-            isLoading.value = false;
-            Get.to(LoginUI());
+            Get.snackbar("Error", "User data not found");
+            setIsLoading(false.obs);
           }
         });
         isLoading.value = false;

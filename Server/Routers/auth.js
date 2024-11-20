@@ -101,7 +101,9 @@ authRouter.post("/api/userProfile", async (req, res) => {
 // get user data
 authRouter.get("/", auth, async (req, res) => {
   const user = await User.findById(req.user);
-  res.json({ ...user._doc, token: req.token });
+  console.log("yes");
+
+  res.json({ user: user, token: req.token });
 });
 
 module.exports = authRouter;

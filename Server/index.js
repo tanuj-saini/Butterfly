@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./Routers/auth");
+const butterflyRouter = require("./Routers/butterfly");
 // const adminRouter = require("./routes/admin");
 // IMPORTS FROM OTHER FILES
 // const authRouter = require("./routes/auth");
@@ -17,6 +18,7 @@ const DB =
 // middleware
 app.use(express.json());
 app.use(authRouter);
+app.use(butterflyRouter);
 // app.use(adminRouter);
 // app.use(productRouter);
 // app.use(userRouter);

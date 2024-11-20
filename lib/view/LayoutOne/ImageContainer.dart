@@ -1,10 +1,15 @@
 import 'dart:io';
+import 'package:email_app/Models/ButterflyModel.dart';
+import 'package:email_app/view/ButterflyData.dart';
+import 'package:email_app/view/DiplayButteryDetails.dart';
+import 'package:email_app/view/LayoutOne/login.dart';
 import 'package:email_app/viewModel/ButterFlyC/ButterflyController.dart';
 import 'package:email_app/viewModel/UserC/UserProfileController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PickImageScreen extends StatefulWidget {
   @override
@@ -15,15 +20,53 @@ class _PickImageScreenState extends State<PickImageScreen> {
   final UserProfileController userProfile = Get.put(UserProfileController());
   final ButterflyController butterflyController =
       Get.put(ButterflyController());
-  File? _imageFile;
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
+      // Update both the local state and the controller
+      final imageFile = File(pickedFile.path);
+      butterflyController.imageFile.value = imageFile;
     }
+  }
+
+  List<Butterfly> butterflyHistory = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: Text('Are you sure you want to logout?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                prefs.setString('jwtToken', "");
+
+                Get.to(LoginUI());
+                // Close the dialog
+                // Perform logout action
+              },
+              child: Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _showPickerOptions() {
@@ -95,147 +138,6 @@ class _PickImageScreenState extends State<PickImageScreen> {
     );
   }
 
-  void _showDetailsDialog() {
-    final nameController =
-        TextEditingController(text: butterflyController.butterflyName.value);
-    final scientificNameController =
-        TextEditingController(text: butterflyController.scientificName.value);
-
-    Get.dialog(
-      Dialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Butterfly Details',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple,
-                ),
-              ),
-              SizedBox(height: 20),
-              GestureDetector(
-                onTap: () => _showPickerOptions(),
-                child: Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.purple.shade50,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.purple.withOpacity(0.3)),
-                  ),
-                  child: Obx(() => butterflyController.imageFile.value == null
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.add_photo_alternate,
-                                size: 40, color: Colors.purple),
-                            SizedBox(height: 10),
-                            Text('Add Photo',
-                                style: TextStyle(color: Colors.purple)),
-                          ],
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
-                          child: Image.file(
-                            butterflyController.imageFile.value!,
-                            fit: BoxFit.cover,
-                          ),
-                        )),
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: 'Butterfly Name',
-                  prefixIcon: Icon(Icons.pets, color: Colors.purple),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.purple),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: scientificNameController,
-                decoration: InputDecoration(
-                  labelText: 'Scientific Name',
-                  prefixIcon: Icon(Icons.science, color: Colors.purple),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.purple),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: Text('Cancel'),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (butterflyController.imageFile.value == null) {
-                        Get.snackbar(
-                          'Error',
-                          'Please select an image',
-                          backgroundColor: Colors.red.withOpacity(0.7),
-                          colorText: Colors.white,
-                          snackPosition: SnackPosition.BOTTOM,
-                        );
-                        return;
-                      }
-                      butterflyController.setDetails(
-                        nameController.text,
-                        scientificNameController.text,
-                      );
-                      Get.back();
-                      Get.snackbar(
-                        'Success',
-                        'Butterfly details saved successfully',
-                        backgroundColor: Colors.green.withOpacity(0.7),
-                        colorText: Colors.white,
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                    },
-                    child: Text('Save'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,7 +154,7 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               accountEmail: Text(
-                userProfile.userModelU.value.email ?? "Email",
+                userProfile.userModelU.value.email ?? "userEmail",
               ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -262,18 +164,205 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 ),
               ),
             ),
-            Expanded(child: Container()), // Spacer to push logout to bottom
             ListTile(
-              leading: Icon(Icons.logout, color: Colors.red),
-              title: Text('Logout'),
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [Colors.purple.shade400, Colors.pink.shade400],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Icon(Icons.list, color: Colors.white, size: 24),
+              ),
+              title: Text(
+                'All Species',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.grey[800],
+                ),
+              ),
+              subtitle: Text(
+                'View all the species in the app',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
               onTap: () {
-                // Handle logout action
+                Get.to(ButterflyListPage());
               },
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              tileColor: Colors.white,
+              splashColor: Colors.grey[100],
+              selectedColor: Colors.grey[200],
+            ),
+            Obx(() {
+              return ExpansionTile(
+                leading: Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [Colors.blue.shade400, Colors.blue.shade300],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Icon(Icons.history, color: Colors.white, size: 24),
+                ),
+                title: Text(
+                  'Butterfly History',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.grey[800],
+                  ),
+                ),
+                subtitle: Text(
+                  'View your past butterfly observations',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
+                ),
+                children: [
+                  SizedBox(
+                    height: 200,
+                    child: butterflyController.butterflyHistory.isNotEmpty
+                        ? ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            itemCount:
+                                butterflyController.butterflyHistory.length,
+                            itemBuilder: (context, index) {
+                              final butterfly =
+                                  butterflyController.butterflyHistory[index];
+                              return ListTile(
+                                leading: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.purple.shade400,
+                                        Colors.pink.shade400
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      butterfly.name?[0].toUpperCase() ?? "N",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                title: Text(
+                                  butterfly.name ?? "Name",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  butterfly.scientificName ?? "Scientific Name",
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Get.to(ButterflyDetailScreen(
+                                      butterfly: butterfly));
+                                },
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                tileColor: Colors.white,
+                                splashColor: Colors.grey[100],
+                                selectedColor: Colors.grey[200],
+                              );
+                            },
+                          )
+                        : ListTile(
+                            title: Text("No history found"),
+                          ),
+                  ),
+                ],
+              );
+            }),
+            ListTile(
+              leading: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [Colors.red.shade400, Colors.red.shade300],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Icon(Icons.logout, color: Colors.white, size: 24),
+              ),
+              title: Text(
+                'Logout',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.grey[800],
+                ),
+              ),
+              subtitle: Text(
+                'Sign out of the app',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
+              onTap: () {
+                showLogoutDialog(context);
+              },
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              tileColor: Colors.white,
+              splashColor: Colors.grey[100],
+              selectedColor: Colors.grey[200],
             ),
           ],
         ),
       ),
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.purple.shade400, Colors.pink.shade400],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         title: Text('Butterfly Detection'),
       ),
       body: Container(
@@ -295,7 +384,7 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 Expanded(
                   child: Center(
                     child: Obx(() => GestureDetector(
-                          onTap: _showDetailsDialog,
+                          onTap: _showPickerOptions,
                           child: Container(
                             width: double.infinity,
                             constraints: BoxConstraints(maxWidth: 400),
@@ -343,76 +432,17 @@ class _PickImageScreenState extends State<PickImageScreen> {
                                         ),
                                       ],
                                     )
-                                  : Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        Image.file(
-                                          butterflyController.imageFile.value!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Positioned(
-                                          bottom: 0,
-                                          left: 0,
-                                          right: 0,
-                                          child: Container(
-                                            padding: EdgeInsets.all(16),
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                begin: Alignment.bottomCenter,
-                                                end: Alignment.topCenter,
-                                                colors: [
-                                                  Colors.black.withOpacity(0.8),
-                                                  Colors.transparent,
-                                                ],
-                                              ),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Obx(() => Text(
-                                                      butterflyController
-                                                              .butterflyName
-                                                              .value
-                                                              .isEmpty
-                                                          ? 'Tap to add details'
-                                                          : butterflyController
-                                                              .butterflyName
-                                                              .value,
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    )),
-                                                if (butterflyController
-                                                    .scientificName
-                                                    .value
-                                                    .isNotEmpty)
-                                                  Obx(() => Text(
-                                                        butterflyController
-                                                            .scientificName
-                                                            .value,
-                                                        style: TextStyle(
-                                                          color: Colors.white70,
-                                                          fontSize: 14,
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                        ),
-                                                      )),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  : Image.file(
+                                      butterflyController.imageFile.value!,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                      height: double.infinity,
                                     ),
                             ),
                           ),
                         )),
                   ),
                 ),
-                // Keep existing tips section
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 20),
                   padding: EdgeInsets.all(20),
@@ -445,21 +475,17 @@ class _PickImageScreenState extends State<PickImageScreen> {
           ),
         ),
       ),
-      //floatingActionButton: FloatingActionButton.extended(onPressed: (){}, label: Text("+")),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          if (butterflyController.butterflyName.value.isEmpty ||
-              butterflyController.scientificName.value.isEmpty) {
-            Get.snackbar(
-              'Warning',
-              'Please add complete butterfly details first',
-              backgroundColor: Colors.orange.withOpacity(0.7),
-              colorText: Colors.white,
-              snackPosition: SnackPosition.BOTTOM,
-            );
-            return;
+        onPressed: () async {
+          const url =
+              'https://huggingface.co/spaces/sssdfcfdsf/deploy'; // Replace with your desired URL
+
+          if (await canLaunchUrl(Uri.parse(url))) {
+            await launchUrl(Uri.parse(url));
+          } else {
+            // Handle error if the URL cannot be launched
+            throw 'Could not launch $url';
           }
-          butterflyController.uploadButterflyData();
         },
         icon: Icon(Icons.cloud_upload),
         label: Text('Upload'),

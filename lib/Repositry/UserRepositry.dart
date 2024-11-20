@@ -27,8 +27,7 @@ class UserRepositry {
     // Access 'user' and 'token' directly from the decoded map
     Map<String, dynamic> user = decodedResponse['user'];
     String token = decodedResponse['token'];
-
-    print(user);
+    print("hello Token");
     print(token);
 
     // Save the token to SharedPreferences
