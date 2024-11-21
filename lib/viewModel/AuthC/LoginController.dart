@@ -2,6 +2,7 @@ import 'package:email_app/Models/UserModel.dart';
 import 'package:email_app/Repositry/LoginRepositry.dart';
 
 import 'package:email_app/data/response/status.dart';
+import 'package:email_app/utils/const.dart';
 import 'package:email_app/view/LayoutOne/ImageContainer.dart';
 import 'package:email_app/view/LayoutOne/UserProfile.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,7 @@ class SignInController extends GetxController {
       password: passwordController.value.text,
     );
 
-    _api
-        .signInApi(userModel.toJson(), "http://localhost:3000/api/signup")
-        .then((value) {
+    _api.signInApi(userModel.toJson(), "${URL}/api/signup").then((value) {
       setIsLoading(false.obs);
 
       if (value != null) {

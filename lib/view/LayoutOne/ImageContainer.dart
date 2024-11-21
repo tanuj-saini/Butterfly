@@ -147,7 +147,15 @@ class _PickImageScreenState extends State<PickImageScreen> {
             UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.grey[200],
-                child: Icon(Icons.person, size: 40, color: Colors.purple),
+                backgroundImage:
+                    (userProfile.userModelU.value.profileURL != null &&
+                            userProfile.userModelU.value.profileURL!.isNotEmpty)
+                        ? NetworkImage(userProfile.userModelU.value.profileURL!)
+                        : null,
+                child: (userProfile.userModelU.value.profileURL == null ||
+                        userProfile.userModelU.value.profileURL!.isEmpty)
+                    ? Icon(Icons.person, size: 40, color: Colors.purple)
+                    : null,
               ),
               accountName: Text(
                 userProfile.userModelU.value.name ?? "Name",

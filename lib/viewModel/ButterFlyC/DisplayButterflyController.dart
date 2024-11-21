@@ -17,7 +17,9 @@ class DisplayButterflyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    searchQuery.value = '';
     fetchButterflies();
+
     ever(searchQuery, (_) => filterButterflies());
   }
 

@@ -1,13 +1,11 @@
 import 'package:email_app/Models/UserModel.dart';
 import 'package:email_app/Repositry/LoginRepositry.dart';
 import 'package:email_app/data/response/status.dart';
+import 'package:email_app/utils/const.dart';
 import 'package:email_app/view/LayoutOne/ImageContainer.dart';
-import 'package:email_app/view/LayoutOne/UserProfile.dart';
-import 'package:email_app/view/LayoutOne/login.dart';
-import 'package:email_app/view/LayoutOne/register.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class LoginController extends GetxController {
   RxString error = "".obs;
@@ -46,9 +44,7 @@ class LoginController extends GetxController {
       password: passwordController.value.text,
     );
 
-    _api
-        .loginApi(userModel.toJson(), "http://localhost:3000/api/signin")
-        .then((value) {
+    _api.loginApi(userModel.toJson(), "${URL}/api/signin").then((value) {
       setIsLoading(false.obs);
 
       if (value != null) {

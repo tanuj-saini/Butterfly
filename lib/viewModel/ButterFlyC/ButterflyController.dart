@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:email_app/Models/ButterflyModel.dart';
+import 'package:email_app/utils/const.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +28,7 @@ class ButterflyController extends GetxController {
     try {
       final request = http.MultipartRequest(
         'POST',
-        Uri.parse('https://localhost:3000/api/butterflies'),
+        Uri.parse('${URL}/api/butterflies'),
       );
       request.fields['name'] = butterflyName.value;
       request.fields['scientificName'] = scientificName.value;

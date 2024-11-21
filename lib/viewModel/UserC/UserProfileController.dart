@@ -1,10 +1,11 @@
+import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:email_app/Models/UserModel.dart';
 import 'package:email_app/Repositry/LoginRepositry.dart';
 import 'package:email_app/Repositry/UserRepositry.dart';
+import 'package:email_app/utils/const.dart';
 import 'package:email_app/view/LayoutOne/ImageContainer.dart';
 import 'package:email_app/view/LayoutOne/login.dart';
 import 'package:email_app/viewModel/AuthC/LoginController.dart';
-import 'package:email_app/viewModel/UserC/UpdateUserController.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +26,7 @@ class UserProfileController extends GetxController {
   }
 
   final nameController = TextEditingController().obs;
-  final userProfileController = TextEditingController().obs;
+  final userProfileController = "".obs;
 
   // Method to handle updating user profile
   Future<void> updateUserProfile() async {
@@ -33,13 +34,19 @@ class UserProfileController extends GetxController {
 
     try {
       // Call API to update user profile
+      String photoUrlCLo = '';
+      final cloudinary = CloudinaryPublic("dix3jqg7w", 'aqox8ip4');
+      CloudinaryResponse response = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(userProfileController.value,
+              folder: "User Profile"));
+      photoUrlCLo = response.secureUrl;
       var updatedUser = await _api.updateUserProfileApi(
         {
           'email': signInController.emailController.value.text,
           'name': nameController.value.text,
-          'userProfile': userProfileController.value.text,
+          'userProfile': userProfileController.value,
         },
-        "http://localhost:3000/api/userProfile", // Backend URL to update profile
+        "${URL}/api/userProfile", // Backend URL to update profile
       );
 
       if (updatedUser != null) {
@@ -77,7 +84,7 @@ class UserProfileController extends GetxController {
     }
 
     _apiUser.sendJwtVerify(
-      "http://localhost:3000/tokenIsValid",
+      "${URL}/tokenIsValid",
       <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': token!,
@@ -88,7 +95,7 @@ class UserProfileController extends GetxController {
       print(token);
       if (value) {
         _apiUser.getUserData(
-          "http://localhost:3000/",
+          "${URL}",
           <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token,
@@ -117,6 +124,10 @@ class UserProfileController extends GetxController {
       }
     }).onError((error, stackTrace) {
       Get.snackbar("Error", error.toString());
+      if (error.toString() == "Request Time Outnull") {
+        Get.snackbar("Server", "Wait Server is Starting...");
+        Get.to(LoginUI());
+      }
       print("Error: $error");
       print("StackTrace: $stackTrace");
 

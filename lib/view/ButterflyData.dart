@@ -1,6 +1,5 @@
 import 'package:email_app/Repositry/ButterflyRepositry.dart';
 import 'package:email_app/view/ButterItem.dart';
-import 'package:email_app/view/DiplayButteryDetails.dart';
 import 'package:email_app/viewModel/ButterFlyC/DisplayButterflyController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,19 +10,8 @@ class ButterflyListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.updateSearchQuery('');
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Butterfly Details'),
-      //   flexibleSpace: Container(
-      //     decoration: BoxDecoration(
-      //       gradient: LinearGradient(
-      //         colors: [Colors.purple.shade400, Colors.pink.shade400],
-      //         begin: Alignment.topLeft,
-      //         end: Alignment.bottomRight,
-      //       ),
-      //     ),
-      //   ),
-      // ),
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
