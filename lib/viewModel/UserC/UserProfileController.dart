@@ -29,7 +29,7 @@ class UserProfileController extends GetxController {
   final userProfileController = "".obs;
 
   // Method to handle updating user profile
-  Future<void> updateUserProfile() async {
+  Future<void> updateUserProfile(String email) async {
     isLoading(true); // Start loading
 
     try {
@@ -42,7 +42,7 @@ class UserProfileController extends GetxController {
       photoUrlCLo = response.secureUrl;
       var updatedUser = await _api.updateUserProfileApi(
         {
-          'email': signInController.emailController.value.text,
+          'email': email,
           'name': nameController.value.text,
           'userProfile': userProfileController.value,
         },
@@ -64,7 +64,7 @@ class UserProfileController extends GetxController {
       }
     } catch (error) {
       this.error.value = error.toString();
-      Get.snackbar("Error", "Failed to update profile");
+      // Get.snackbar("Error", "Failed to update profile");
     } finally {
       isLoading(false); // Stop loading
     }

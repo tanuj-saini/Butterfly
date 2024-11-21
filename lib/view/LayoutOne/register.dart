@@ -239,32 +239,46 @@ class _RegisterUIState extends State<RegisterUI> {
                     ),
                     SizedBox(height: 50),
                     SizedBox(
-                      width: width * 0.5,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            signInController.sendSignInData();
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+                        width: width * 0.5,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: signInController.isLoading.value
+                              ? null // Disable the button when loading
+                              : () {
+                                  if (formKey.currentState!.validate()) {
+                                    signInController.isLoading.value =
+                                        true; // Set loading to true
+                                    signInController.sendSignInData();
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            elevation: 5,
                           ),
-                          elevation: 5,
-                        ),
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.2,
-                            color: Colors.white,
+                          child: Obx(
+                            () => signInController.isLoading.value
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.2,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
-                        ),
-                      ),
-                    ),
+                        )),
                     Column(
                       children: [
                         SizedBox(height: height * 0.03),

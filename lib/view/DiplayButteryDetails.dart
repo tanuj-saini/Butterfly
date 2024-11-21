@@ -1,7 +1,7 @@
 import 'package:email_app/Models/ButterflyModel.dart';
-import 'package:email_app/view/WebView.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class ButterflyDetailScreen extends StatelessWidget {
@@ -14,13 +14,6 @@ class ButterflyDetailScreen extends StatelessWidget {
         butterfly.name?.replaceAll(' ', '_') ?? 'Unknown_Butterfly';
     final scientificName = butterfly.scientificName ?? 'Unknown';
     final url = 'https://en.wikipedia.org/wiki/${commonName}_($scientificName)';
-
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => WikipediaWebViewScreen(url: url),
-    //   ),
-    // );
   }
 
   @override

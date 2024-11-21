@@ -53,7 +53,9 @@ class SignInController extends GetxController {
         setUserModel(value);
         Get.snackbar("Successfully Signed In", "Welcome");
 
-        Get.to(ProfileSetupScreen());
+        Get.to(ProfileSetupScreen(
+          email: emailController.value.text,
+        ));
       } else {
         setError("Sign-In failed. Please try again.");
       }

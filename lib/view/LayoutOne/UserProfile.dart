@@ -6,7 +6,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
-  const ProfileSetupScreen({super.key});
+  final String email;
+  const ProfileSetupScreen({required this.email, super.key});
 
   @override
   State<ProfileSetupScreen> createState() => _ProfileSetupScreenState();
@@ -250,13 +251,14 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Trigger update profile from UserProfileController
-                          _userProfileController
-                              .updateUserProfile(); // replace with actual email if available
-                        }
-                      },
+                      onPressed: _userProfileController.isLoading.value
+                          ? null // Disable button if loading
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                _userProfileController
+                                    .updateUserProfile(widget.email);
+                              }
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.purple,
                         shape: RoundedRectangleBorder(
@@ -264,14 +266,24 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         ),
                         elevation: 5,
                       ),
-                      child: const Text(
-                        "Save Profile",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
-                        ),
-                      ),
+                      child: Obx(() => _userProfileController.isLoading.value
+                          ? SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors
+                                    .white, // Match the button's text color
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : const Text(
+                              "Save Profile",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                              ),
+                            )),
                     ),
                   ),
                 ],

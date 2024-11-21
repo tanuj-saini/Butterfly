@@ -105,6 +105,7 @@ class LoginRepositry {
 
   Future<UserModel?> updateUserProfileApi(dynamic data, String url) async {
     try {
+      print(data);
       // Perform POST request to update user profile
       final response = await _appService.postApi(data, url);
       final decodedResponse = jsonDecode(response);
