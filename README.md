@@ -25,9 +25,9 @@ Our project focuses on developing a **Flutter-based mobile application** designe
 ---
 ## Workflow
 <div style="display: flex; justify-content: space-between;">
-<img src="https://github.com/user-attachments/assets/9f944c2e-e789-4d87-9907-e6478c718f09" alt="1" style="width: 33%;">
-<img src="https://github.com/user-attachments/assets/338d7885-1e32-4b7e-b290-b7e86a2aed25" alt="2" style="width: 33%;">
-<img src="https://github.com/user-attachments/assets/14ca9879-b4ee-4b9e-b802-36c971dcff16" alt="3" style="width: 33%;">
+<img src="https://github.com/user-attachments/assets/9f944c2e-e789-4d87-9907-e6478c718f09" alt="1" style="width: 32%;">
+<img src="https://github.com/user-attachments/assets/338d7885-1e32-4b7e-b290-b7e86a2aed25" alt="2" style="width: 32%;">
+<img src="https://github.com/user-attachments/assets/14ca9879-b4ee-4b9e-b802-36c971dcff16" alt="3" style="width: 32%;">
 </div>
 
 ---
