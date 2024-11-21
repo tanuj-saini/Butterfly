@@ -1,5 +1,6 @@
 // IMPORTS FROM PACKAGES
 const express = require("express");
+require("dotenv").config();
 const mongoose = require("mongoose");
 const authRouter = require("./Routers/auth");
 const butterflyRouter = require("./Routers/butterfly");
@@ -12,8 +13,7 @@ const butterflyRouter = require("./Routers/butterfly");
 // INIT
 const PORT = process.env.PORT || 3000;
 const app = express();
-const DB =
-  "mongodb+srv://medeaszzz:butterfly@cluster0.80f7f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const DB = process.env.DATABASE_URL;
 // butterfly
 // middleware
 app.use(express.json());
