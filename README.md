@@ -1,34 +1,68 @@
+# 🦋 Butterfly Classification App (Species of Gujarat)
 
-# Butterfly Classification App (Species of Gujarat) 🦋
+## 👩‍🏫 Mentorship  
+- **Dr. Swapnil Lokhande**
+
+---
 
 **Team Members**  
 - Smit Shah (202251122)  
 - Heet Shah (202251121)  
 - Parv Thummar (202251143)  
-- Tanuj Saini (202251141)  
-
-**[👉 Visit the Website](https://huggingface.co/spaces/sssdfcfdsf/deploy)**  
-
+- Tanuj Saini (202251141)
 ---
+
+## 🔗 Links & Resources  
+
+### **Deployed App Links**  
+- **Android App**: [Download the Butterfly Classification App](https://drive.google.com/file/d/1NF8f88E1Wxuu6REl3n_RPqzr3AkTmdYZ/view?usp=sharing)  
+- **Access the Model directly here ->**: [Web App](https://huggingface.co/spaces/sssdfcfdsf/deploy)
+
+### **Reports & Posters**  
+- **Final Report**: [View the Report](https://drive.google.com/file/d/16aZpKaP9xlw18V1FQxZm0L5xfsrFWWeF/view?usp=sharing)  
+- **Poster**: [Download the Poster](https://drive.google.com/file/d/1NZ9PfLoxufdv_cIioBeBsTqKiY-EGWMa/view?usp=sharing)  
+
+### **Dataset**  
+- **Dataset Link**: [Access the Dataset](https://drive.google.com/drive/folders/1FlGlNmMXOCif4-bdxzxSEDdbtIW5JQX-)  
+- **Dataset Curated From**: [iFoundButterflies](https://www.ifoundbutterflies.org/)
+
+### **Model Checkpoints**  
+- **VGG-16 Model Checkpoints**: [50 EPOCHS](https://drive.google.com/file/d/1TbVPD2jNiFNe6hclk0Uxnk4FVGyTQhk7/view?usp=sharing)  
+
+### **SAM Models**  
+- **Github Reporitory**: [Repo](https://github.com/facebookresearch/segment-anything/tree/main) 
+
+- **SAM Model used for Project**:
+  - **vit_l**: [Download vit_l (1.5GB)](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth)
+
+- **Other Available SAM Models**:
+  - **vit_b**: [Download base model(0.5GB)](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth)
+  - **vit_h**: [Download large model (2.5GB)](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth)
+---
+
+## 📄 SAM Outputs  
+- **SAM Model Outputs**: [for our dataset](https://docs.google.com/document/d/15F2JfelWtwPOqW_LfRB1afMZb944jh_0NJqs6ZJO8TY/edit?usp=sharing)
+
+
 
 ## 📖 Introduction  
-Our project focuses on developing a **Flutter-based mobile application** designed to identify butterfly species native to Gujarat. Combining state-of-the-art AI technologies with an intuitive mobile experience, the app provides:  
-- **Real-time butterfly identification** through image segmentation and classification.  
-- A **comprehensive catalog of 109 butterfly species** with detailed information on each.  
+Our project focuses on developing a **Flutter-based mobile application** designed to identify butterfly species native to Gujarat. Combining state-of-the-art AI technologies with an intuitive mobile experience, the app provides:
+
+- **Real-time butterfly identification** through image segmentation and classification.
+- A **comprehensive catalog of 109 butterfly species** with detailed information on each.
 - Tools tailored for **researchers, enthusiasts, and conservationists** to promote biodiversity awareness and conservation efforts.
 
-### Key Highlights  
-- Utilizes **SAM (Segment Anything Model)** for precise image segmentation.  
-- Achieves **85% classification accuracy** using a fine-tuned VGG-16 model.  
-- Serves as an educational and practical tool for biodiversity studies.  
-
----
-## Workflow
-<div style="display: flex; justify-content: space-between;">
-<img src="https://github.com/user-attachments/assets/9f944c2e-e789-4d87-9907-e6478c718f09" alt="1" style="width: 32%;">
-<img src="https://github.com/user-attachments/assets/338d7885-1e32-4b7e-b290-b7e86a2aed25" alt="2" style="width: 32%;">
-<img src="https://github.com/user-attachments/assets/14ca9879-b4ee-4b9e-b802-36c971dcff16" alt="3" style="width: 32%;">
+## 🏎️ WORKFLOW  
+<div style="display: flex; justify-content: space-between; gap: 1%;">  
+  <img src="https://github.com/user-attachments/assets/170adf75-5141-467c-886c-116b933a5be5" alt="Workflow 1" style="width: 32%;">  
+  <img src="https://github.com/user-attachments/assets/878d7f48-29cd-4b2f-8c68-2c30884bbccc" alt="Workflow 2" style="width: 32%;">  
+  <img src="https://github.com/user-attachments/assets/9190bd2c-7b1b-4cce-be3d-8dac0ef18821" alt="Workflow 3" style="width: 32%;">  
 </div>
+
+### Key Highlights
+- Utilizes **SAM (Segment Anything Model)** for precise image segmentation.
+- Achieves **85% classification accuracy** using a fine-tuned VGG-16 model.
+- Serves as an educational and practical tool for biodiversity studies.
 
 ---
 
@@ -50,7 +84,7 @@ Our project focuses on developing a **Flutter-based mobile application** designe
 
 ---
 
-## 📚 Methodology  
+## 🧑‍💻 Methodology  
 
 ### 1. **Data Collection and Preprocessing**  
    - Collected images of butterfly species from Gujarat from reliable online sources.  
@@ -94,16 +128,19 @@ Our project focuses on developing a **Flutter-based mobile application** designe
 ## 📸 Screenshots and Visuals  
 
 ### Masking BY SAM Model
-![image-removebg-preview](https://github.com/user-attachments/assets/efbc3311-3a8f-414f-8f3b-6395a8ad8b3e)
+![SAM Model Masking](https://github.com/user-attachments/assets/efbc3311-3a8f-414f-8f3b-6395a8ad8b3e)
+---
 
-##add here...........
-### Detailed Species Catalog  
+## 📅 Future Enhancements
 
-### User Profile and History Tracking  
+- **Expand to National and International Species**:  
+  - Increase the app's reach by adding species from different regions and countries.
+  
+- **Community Contributions**:  
+  - Create a platform for users to contribute new species sightings and academic content.
 
 ---
 
-## 👩‍🏫 Mentorship  
-- **Dr. Swapnil Lokhande**  
+This **Butterfly Classification App** is an excellent tool for promoting biodiversity awareness, providing researchers and enthusiasts with a valuable resource for identifying and learning about butterfly species in Gujarat. 🌿
 
----  
+---
