@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:email_app/Models/ButterflyModel.dart';
 import 'package:email_app/view/ButterflyData.dart';
 import 'package:email_app/view/DiplayButteryDetails.dart';
@@ -372,7 +371,10 @@ class _PickImageScreenState extends State<PickImageScreen> {
             ),
           ),
         ),
-        title: Text('Butterfly Detection'),
+        title: Text(
+          'Butterfly Identification for Gujarat',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -393,7 +395,18 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 Expanded(
                   child: Center(
                     child: Obx(() => GestureDetector(
-                          onTap: _showPickerOptions,
+                          // onTap: _showPickerOptions,
+                          onTap: () async {
+                            const url =
+                                'https://huggingface.co/spaces/sssdfcfdsf/deploy'; // Replace with your desired URL
+
+                            if (await canLaunchUrl(Uri.parse(url))) {
+                              await launchUrl(Uri.parse(url));
+                            } else {
+                              // Handle error if the URL cannot be launched
+                              throw 'Could not launch $url';
+                            }
+                          },
                           child: Container(
                             width: double.infinity,
                             constraints: BoxConstraints(maxWidth: 400),

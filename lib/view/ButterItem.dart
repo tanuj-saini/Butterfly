@@ -37,8 +37,27 @@ class ButterflyListItem extends StatelessWidget {
         subtitle: Text(butterfly.scientificName ?? "Scientific Name"),
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(8),
+          // child: Image.network(
+          //   butterfly.imageURL ?? "Image",
+          //   width: 50,
+          //   height: 50,
+          //   fit: BoxFit.cover,
+          //   errorBuilder: (context, error, stackTrace) {
+          //     return Container(
+          //       width: 50,
+          //       height: 50,
+          //       color: Colors.grey[300],
+          //       child: Icon(Icons.bug_report, color: Colors.grey[600]),
+          //     );
+          //   },
+          // ),
           child: Image.network(
-            butterfly.imageURL ?? "Image",
+            butterfly.imageURL != null
+                ? butterfly.imageURL!
+                    .replaceFirst('https://drive.google.com/file/d/',
+                        'https://drive.google.com/uc?export=view&id=')
+                    .replaceFirst('/view', '')
+                : "Image",
             width: 50,
             height: 50,
             fit: BoxFit.cover,

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="email_app"
+        android:label="Flutter Fly"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
@@ -37,6 +37,17 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <intent>
+              <action android:name="android.intent.action.VIEW" />
+              <data android:scheme="sms" />
+        </intent>
+        <intent>
+             <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+        <intent>
+             <action android:name="android.intent.action.VIEW" />
+             <data android:scheme="tel" />
+        </intent>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

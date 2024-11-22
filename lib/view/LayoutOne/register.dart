@@ -1,6 +1,5 @@
 import 'package:email_app/view/LayoutOne/login.dart';
 import 'package:email_app/viewModel/AuthC/LoginController.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,8 +11,7 @@ class RegisterUI extends StatefulWidget {
 }
 
 class _RegisterUIState extends State<RegisterUI> {
-  final SignInController signInController =
-      Get.put(SignInController()); // Initialize SignInController with GetX
+  final SignInController signInController = Get.put(SignInController());
   final GlobalKey<FormState> formKey = GlobalKey();
   bool isPasswordVisible = false;
 
@@ -24,33 +22,20 @@ class _RegisterUIState extends State<RegisterUI> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      resizeToAvoidBottomInset:
-          true, // Ensures that the screen resizes when the keyboard appears
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context)
-                  .viewInsets
-                  .bottom), // Adds padding when the keyboard appears
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Stack(
             children: [
-              // Purple Gradient Background
-              Container(
-                width: width * 0.85,
-                height: height * 0.65,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.purple.shade200,
-                      Colors.purple.shade300,
-                      Colors.purple,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(width * 1.5),
-                    bottomRight: Radius.circular(width * 1.45),
+              // Background Image with Opacity
+              Positioned.fill(
+                child: Opacity(
+                  opacity: 0.5, // Adjust opacity as needed (0.0 to 1.0)
+                  child: Image.asset(
+                    'assets/butterflyicon.png',
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -70,15 +55,17 @@ class _RegisterUIState extends State<RegisterUI> {
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
-                        color: Colors.white,
+                        color: Colors
+                            .black87, // Changed to dark color for better visibility
                       ),
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      "Welcome !!",
+                      "Welcome, To explore a catalogue and try out butterfly Identification just register yourself with us!!",
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white70,
+                        color: Colors
+                            .black54, // Changed to dark color for better visibility
                       ),
                     ),
                     SizedBox(height: height * 0.12),
@@ -87,7 +74,8 @@ class _RegisterUIState extends State<RegisterUI> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.white
+                              .withOpacity(0.9), // Added opacity to the card
                           borderRadius: BorderRadius.circular(15),
                           boxShadow: [
                             BoxShadow(
@@ -239,50 +227,49 @@ class _RegisterUIState extends State<RegisterUI> {
                     ),
                     SizedBox(height: 50),
                     SizedBox(
-                        width: width * 0.5,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: signInController.isLoading.value
-                              ? null // Disable the button when loading
-                              : () {
-                                  if (formKey.currentState!.validate()) {
-                                    signInController.isLoading.value =
-                                        true; // Set loading to true
-                                    signInController.sendSignInData();
-                                  }
-                                },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            elevation: 5,
+                      width: width * 0.5,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: signInController.isLoading.value
+                            ? null
+                            : () {
+                                if (formKey.currentState!.validate()) {
+                                  signInController.isLoading.value = true;
+                                  signInController.sendSignInData();
+                                }
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
                           ),
-                          child: Obx(
-                            () => signInController.isLoading.value
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Text(
-                                    "Sign Up",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.2,
-                                      color: Colors.white,
-                                    ),
+                          elevation: 5,
+                        ),
+                        child: Obx(
+                          () => signInController.isLoading.value
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
                                   ),
-                          ),
-                        )),
+                                )
+                              : const Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
                     Column(
                       children: [
                         SizedBox(height: height * 0.03),
-
                         // Sign In Link
                         GestureDetector(
                           onTap: () {

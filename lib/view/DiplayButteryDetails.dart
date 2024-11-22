@@ -75,10 +75,14 @@ class ButterflyDetailScreen extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  final commonName = butterfly.name?.replaceAll(' ', '_') ??
+                  final commonName = butterfly.name?.replaceAll(' ', '-') ??
                       'Unknown_Butterfly';
-                  final scientificName = butterfly.scientificName ?? 'Unknown';
-                  final url = 'https://en.wikipedia.org/wiki/$scientificName';
+                  // final scientificName = butterfly.scientificName ?? 'Unknown';
+                  final scientificName =
+                      butterfly.scientificName?.replaceAll(' ', '-') ??
+                          'Unknown_Butterfly';
+                  final url =
+                      'https://www.ifoundbutterflies.org/$scientificName';
 
                   if (await canLaunchUrl(Uri.parse(url))) {
                     await launchUrl(Uri.parse(url));

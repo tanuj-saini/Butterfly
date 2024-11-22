@@ -1,6 +1,5 @@
 import 'package:email_app/view/LayoutOne/register.dart';
 import 'package:email_app/viewModel/AuthC/SignController.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,23 +29,13 @@ class _LoginUIState extends State<LoginUI> {
             height: height,
             child: Stack(
               children: [
-                // Purple Gradient Background
-                Container(
-                  width: width * 0.85,
-                  height: height * 0.65,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        Colors.purple.shade200,
-                        Colors.purple.shade300,
-                        Colors.purple,
-                      ],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(width * 1.5),
-                      bottomRight: Radius.circular(width * 1.45),
+                // Background Image with Opacity
+                Positioned.fill(
+                  child: Opacity(
+                    opacity: 0.5, // Adjust opacity as needed (0.0 to 1.0)
+                    child: Image.asset(
+                      'assets/butterflyicon.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -67,15 +56,17 @@ class _LoginUIState extends State<LoginUI> {
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1.2,
-                          color: Colors.white,
+                          color: Colors
+                              .black87, // Changed to dark color for better visibility
                         ),
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Welcome Back!",
+                        "Welcome Back to Butterfly Identification App specially made for the species of Gujarat!",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.white70,
+                          color: Colors
+                              .black54, // Changed to dark color for better visibility
                         ),
                       ),
                       SizedBox(height: height * 0.12),
@@ -85,7 +76,8 @@ class _LoginUIState extends State<LoginUI> {
                         alignment: Alignment.centerRight,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Colors.white
+                                .withOpacity(0.9), // Added opacity to the card
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
@@ -217,8 +209,7 @@ class _LoginUIState extends State<LoginUI> {
                                             child:
                                                 _loginController.isLoading.value
                                                     ? CircularProgressIndicator(
-                                                        color: Colors.white,
-                                                      )
+                                                        color: Colors.white)
                                                     : const Text(
                                                         "Sign In",
                                                         style: TextStyle(
