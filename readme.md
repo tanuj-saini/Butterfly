@@ -52,6 +52,13 @@ Our project focuses on developing a **Flutter-based mobile application** designe
 - A **comprehensive catalog of 109 butterfly species** with detailed information on each.
 - Tools tailored for **researchers, enthusiasts, and conservationists** to promote biodiversity awareness and conservation efforts.
 
+## 🏎️ WORKFLOW  
+<div style="display: flex; justify-content: space-between; gap: 1%;">  
+  <img src="https://github.com/user-attachments/assets/170adf75-5141-467c-886c-116b933a5be5" alt="Workflow 1" style="width: 32%;">  
+  <img src="https://github.com/user-attachments/assets/878d7f48-29cd-4b2f-8c68-2c30884bbccc" alt="Workflow 2" style="width: 32%;">  
+  <img src="https://github.com/user-attachments/assets/9190bd2c-7b1b-4cce-be3d-8dac0ef18821" alt="Workflow 3" style="width: 32%;">  
+</div>
+
 ### Key Highlights
 - Utilizes **SAM (Segment Anything Model)** for precise image segmentation.
 - Achieves **85% classification accuracy** using a fine-tuned VGG-16 model.
