@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:email_app/Models/ButterflyModel.dart';
 import 'package:email_app/view/ButterflyData.dart';
 import 'package:email_app/view/DiplayButteryDetails.dart';
+import 'package:email_app/view/LayoutOne/Result_Screnn.dart';
 import 'package:email_app/view/LayoutOne/login.dart';
 import 'package:email_app/viewModel/ButterFlyC/ButterflyController.dart';
+import 'package:email_app/viewModel/ButterFlyC/ResultController.dart';
 import 'package:email_app/viewModel/UserC/UserProfileController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,7 @@ class PickImageScreen extends StatefulWidget {
 
 class _PickImageScreenState extends State<PickImageScreen> {
   final UserProfileController userProfile = Get.put(UserProfileController());
+  final ResultController resultController = Get.put(ResultController());
   final ButterflyController butterflyController =
       Get.put(ButterflyController());
 
@@ -373,7 +376,10 @@ class _PickImageScreenState extends State<PickImageScreen> {
         ),
         title: Text(
           'Butterfly Identification for Gujarat',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 232, 232, 232)),
         ),
       ),
       body: Container(
@@ -395,18 +401,18 @@ class _PickImageScreenState extends State<PickImageScreen> {
                 Expanded(
                   child: Center(
                     child: Obx(() => GestureDetector(
-                          // onTap: _showPickerOptions,
-                          onTap: () async {
-                            const url =
-                                'https://huggingface.co/spaces/sssdfcfdsf/deploy'; // Replace with your desired URL
+                          onTap: _showPickerOptions,
+                          // onTap: () async {
+                          //   const url =
+                          //       'https://huggingface.co/spaces/sssdfcfdsf/deploy'; // Replace with your desired URL
 
-                            if (await canLaunchUrl(Uri.parse(url))) {
-                              await launchUrl(Uri.parse(url));
-                            } else {
-                              // Handle error if the URL cannot be launched
-                              throw 'Could not launch $url';
-                            }
-                          },
+                          //   if (await canLaunchUrl(Uri.parse(url))) {
+                          //     await launchUrl(Uri.parse(url));
+                          //   } else {
+                          //     // Handle error if the URL cannot be launched
+                          //     throw 'Could not launch $url';
+                          //   }
+                          // },
                           child: Container(
                             width: double.infinity,
                             constraints: BoxConstraints(maxWidth: 400),
@@ -499,14 +505,12 @@ class _PickImageScreenState extends State<PickImageScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          const url =
-              'https://huggingface.co/spaces/sssdfcfdsf/deploy'; // Replace with your desired URL
-
-          if (await canLaunchUrl(Uri.parse(url))) {
-            await launchUrl(Uri.parse(url));
+          if (butterflyController.imageFile.value == null) {
+            Get.snackbar("Upload Error", "Please Select Or Click Pic");
           } else {
-            // Handle error if the URL cannot be launched
-            throw 'Could not launch $url';
+            Get.to(ResultScreen(image: butterflyController.imageFile.value!));
+            await resultController
+                .uploadImageAndPredict(butterflyController.imageFile.value!);
           }
         },
         icon: Icon(Icons.cloud_upload),

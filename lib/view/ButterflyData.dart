@@ -13,16 +13,38 @@ class ButterflyListPage extends StatelessWidget {
     controller.updateSearchQuery('');
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'Butterflies',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                blurRadius: 10.0,
+                color: Colors.black54,
+                offset: Offset(2.0, 2.0),
+              ),
+            ],
+          ),
+        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.purple.shade400, Colors.pink.shade400],
+              colors: [
+                Colors.purple.shade500,
+                Colors.pink.shade400,
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
         ),
-        title: Text('Butterflies'),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(60),
           child: Padding(
