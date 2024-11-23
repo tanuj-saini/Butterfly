@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:email_app/Models/ButterflyModel.dart';
-import 'package:email_app/utils/const.dart';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
 
 class ButterflyRepository {
-  final String apiUrl = "${URL}/api/butterflies";
+  final String apiUrl =
+      "${dotenv.env['URL'] ?? 'URL not found'}/api/butterflies";
 
   Future<void> saveButterfly(Map<String, dynamic> data) async {
     try {
@@ -31,8 +32,8 @@ class ButterflyRepository {
   }
 
   Future<List<Butterfly>> fetchButterflies(int page, int limit) async {
-    final response = await http
-        .get(Uri.parse('${URL}/api/butterflies?page=$page&limit=$limit'));
+    final response = await http.get(Uri.parse(
+        '${dotenv.env['URL'] ?? 'URL not found'}/api/butterflies?page=$page&limit=$limit'));
 
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
