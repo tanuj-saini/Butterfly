@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? typeOfUser = prefs.getString('jwtToken');
-  await dotenv.load();
+  await dotenv.load(fileName: ".env");
   if (typeOfUser == null) {
     prefs.setString('jwtToken', "");
   }
