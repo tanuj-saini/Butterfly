@@ -19,7 +19,7 @@ _Team Members_
 
 ### _Deployed App Links_
 
-- _Android App_: [Download the Butterfly Classification App](https://drive.google.com/file/d/1NF8f88E1Wxuu6REl3n_RPqzr3AkTmdYZ/view?usp=sharing)
+- _Mobile App_: [Download the Butterfly Classification App](https://drive.google.com/file/d/1NF8f88E1Wxuu6REl3n_RPqzr3AkTmdYZ/view?usp=sharing)
 - _Access the Model directly here ->_: [Web App](https://huggingface.co/spaces/sssdfcfdsf/deploy)
 
 ### _Reports & Posters_
