@@ -183,9 +183,6 @@ class ButterflyDetailScreen extends StatelessWidget {
                       ),
                       child: ElevatedButton(
                         onPressed: () async {
-                          final commonName =
-                              butterfly.name?.replaceAll(' ', '-') ??
-                                  'Unknown_Butterfly';
                           final scientificName =
                               butterfly.scientificName?.replaceAll(' ', '-') ??
                                   'Unknown_Butterfly';

@@ -1,6 +1,7 @@
 import 'package:email_app/view/CheckingUserJwt.dart';
 import 'package:email_app/view/LayoutOne/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? typeOfUser = prefs.getString('jwtToken');
+  await dotenv.load();
   if (typeOfUser == null) {
     prefs.setString('jwtToken', "");
   }

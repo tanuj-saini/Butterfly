@@ -1,4 +1,5 @@
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,7 +17,9 @@ class ResultController extends GetxController {
 
     try {
       String photoUrlCLo = "";
-      final cloudinary = CloudinaryPublic("dix3jqg7w", 'aqox8ip4');
+      final cloudinary = CloudinaryPublic(
+          dotenv.env['CLOD1'] ?? 'Cloudinary1 not found',
+          dotenv.env['CLOD2'] ?? 'Cloudinary2 not found');
       CloudinaryResponse response = await cloudinary.uploadFile(
           CloudinaryFile.fromFile(image.path, folder: "User Profile"));
       photoUrlCLo = response.secureUrl;
@@ -24,11 +27,10 @@ class ResultController extends GetxController {
       if (photoUrlCLo != "") {
         print(photoUrlCLo);
         String imageUrl = photoUrlCLo;
-
+        String api = dotenv.env['API_URL'] ?? 'API URL not found';
         // Send image URL to prediction API
         var apiResponse = await http.post(
-          Uri.parse(
-              "https://8000-01jda21qdpd0s6np9vgc98mtwv.cloudspaces.litng.ai/predict"),
+          Uri.parse(api),
           body: json.encode({"image_url": imageUrl}),
           headers: {"Content-Type": "application/json"},
         );

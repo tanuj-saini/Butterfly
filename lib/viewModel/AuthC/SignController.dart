@@ -1,10 +1,11 @@
 import 'package:email_app/Models/UserModel.dart';
 import 'package:email_app/Repositry/LoginRepositry.dart';
 import 'package:email_app/data/response/status.dart';
-import 'package:email_app/utils/const.dart';
+
 import 'package:email_app/view/LayoutOne/ImageContainer.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
@@ -44,7 +45,10 @@ class LoginController extends GetxController {
       password: passwordController.value.text,
     );
 
-    _api.loginApi(userModel.toJson(), "${URL}/api/signin").then((value) {
+    _api
+        .loginApi(userModel.toJson(),
+            "${dotenv.env['URL'] ?? 'URL not found'}/api/signin")
+        .then((value) {
       setIsLoading(false.obs);
 
       if (value != null) {
